@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Criptomoneda from './Criptomoneda';
+
+import './criptomonedas.css';
 
 function App() {
   const [criptos, setCriptos] = useState([]);
@@ -14,6 +17,7 @@ function App() {
       .then((data) => {
         // setCriptos(data.data);
         setCriptos(data.data.data);
+        console.log(data.data.data);
       })
       .catch((err) => {
         console.error('La petición falló ' + err.message);
@@ -27,11 +31,9 @@ function App() {
   return (
     <>
       <h1>Lista Criptomonedas</h1>
-      <ul>
+      <ul className="list">
         {criptos.map(({ id, name, priceUsd }) => (
-          <li key={id}>
-            Nombre: {name} Precio: {priceUsd}
-          </li>
+          <Criptomoneda key={id} name={name} priceUsd={priceUsd}></Criptomoneda>
         ))}
       </ul>
     </>
