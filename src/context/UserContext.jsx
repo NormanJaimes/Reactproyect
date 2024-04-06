@@ -7,12 +7,13 @@ const UserContextProvider = ({ children }) => {
   useEffect(() => {
     setUsuario({
       name: 'Norman Jaimes',
-      registered: '15/Ago/2022',
+      registered: '15/Agosto/2022',
     });
   }, []);
+
   return (
     <UserContext.Provider value={usuario}>{children}</UserContext.Provider>
   );
 };
 
-export { UserContextProvider, UserContext };
+export { UserContext, UserContextProvider };

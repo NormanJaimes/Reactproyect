@@ -1,36 +1,24 @@
-import { useParams } from 'react-router-dom';
-import Criptomoneda from './Criptomoneda';
-import usePetition from '../../hooks/usePetition';
+import { useParams } from "react-router-dom"
+import usePetition from "../../hooks/usePetition"
+import "./CriptoPage.css"
+import CriptoHistory from "./info/CriptoHistorial"
+import CriptoInfo from "./info/CriptoInfo"
 
-export default function CriptoPage() {
-  // const [cripto, setCripto] = useState({});
+const CriptoPage = () => {
 
-  const params = useParams();
-  // const API_URL = import.meta.env.VITE_API_URL;
-  // fetch(`${API_URL}assets/${params.id}`)
-  //   .then((res) => res.json())
-  //   .then((data) => setCripto(data.data));
+  const params = useParams()
 
-  const cripto = usePetition(`assets/${params.id}`);
-  // const cripto = usePetition(`assets`);
-  // const history = usePetition(`assets/${params.id}/history?interval=d1`);
+  const [cripto, cargandoCripto] = usePetition(`assets/${params.id}`)
+  const [history, cargandoHistory] = usePetition(`assets/${params.id}/history?interval=d1`)
 
-  console.log(cripto);
+  if (cargandoCripto || cargandoHistory) return <span>Cargando...</span>
 
   return (
-    <>
-      {/* <div>CriptoPage </div> */}
-      {cripto && (
-        <>
-          <div>CriptoPage {cripto.id}</div>
-          <Criptomoneda
-            key={cripto.id}
-            id={cripto.id}
-            name={cripto.name}
-            priceUsd={cripto.priceUsd}
-          ></Criptomoneda>
-        </>
-      )}
-    </>
-  );
+  <div className="cripto-page-container">
+    { cripto && <CriptoInfo cripto={cripto} /> }
+    { history && <CriptoHistory history={history} /> }
+  </div>
+  )
 }
+
+export default CriptoPage

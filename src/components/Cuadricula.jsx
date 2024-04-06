@@ -1,53 +1,33 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import Criptomoneda from './cripto/Criptomoneda';
-
-import './cripto/criptomonedas.css';
-import Menu from './menu/Menu';
-import usePetition from '../hooks/usePetition';
+import "./Cuadricula.css"
+import Cripto from "./cripto/Cripto"
+import usePetition from "../hooks/usePetition"
 
 function Cuadricula() {
-  // const [criptos, setCriptos] = useState([]);
 
-  // const API_URL = import.meta.env.VITE_API_URL;
+  const [criptos] = usePetition("assets")
 
-  const criptos = usePetition('assets');
-
-  // useEffect(() => {
-  //   // fetch(`${API_URL}assets`)
-  //   axios
-  //     .get(`${API_URL}assets`)
-  //     // .then((res) => res.json())
-  //     .then((data) => {
-  //       // setCriptos(data.data);
-  //       setCriptos(data.data.data);
-  //       console.log(data.data.data);
-  //     })
-  //     .catch((err) => {
-  //       console.error('La petición falló ' + err.message);
-  //     });
-
-  //   return () => {};
-  // }, []);
-  console.log(criptos);
-
-  if (!criptos) return <h1>Cargando...</h1>;
+  if (!criptos) return <span>Cargando...</span>
 
   return (
-    <>
-      <h1>Lista Criptomonedas</h1>
-      <ul className="list">
-        {criptos.map(({ id, name, priceUsd }) => (
-          <Criptomoneda
-            key={id}
-            id={id}
-            name={name}
-            priceUsd={priceUsd}
-          ></Criptomoneda>
-        ))}
-      </ul>
-    </>
-  );
+    <div className="grid-container">
+      <h1>Lista de criptomonedas</h1>
+      <div className="cripto-container">
+        {
+          criptos.map(({id, name, priceUsd, symbol, changePercent24Hr}) => (
+            <Cripto
+              key={id}
+              name={name}
+              priceUSD={priceUsd}
+              symbol={symbol}
+              changePercent24Hr={changePercent24Hr}
+              id={id}
+            />
+          )) 
+        }
+      </div>
+    </div>
+
+  )
 }
 
-export default Cuadricula;
+export default Cuadricula

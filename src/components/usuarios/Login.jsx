@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import './Login.css';
 
-export default function Login() {
+const Login = () => {
   const navigation = useNavigate();
+
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -13,26 +15,24 @@ export default function Login() {
   const [error, setError] = useState();
 
   const submit = (e) => {
-    setCargando(true);
     e.preventDefault();
+    setCargando(true);
     setError(null);
     axios
-      .post('https://reqres.in/api/login', user)
+      .post(`https://reqres.in/api/login`, user)
       .then((data) => {
         setCargando(false);
-        localStorage.setItem('tokenEDmarket', data.data.token);
+        localStorage.setItem('tokenCripto NNJ', data.data.token);
         navigation('/');
       })
       .catch((e) => {
         setCargando(false);
-        console.error(e);
+        console.table(e);
         setError(e.response.data.error);
       });
   };
 
-  if (localStorage.getItem('tokenEDmarket')) {
-    return <Navigate to={'/'}></Navigate>;
-  }
+  if (localStorage.getItem('tokenCripto NNJ')) return <Navigate to="/" />;
 
   return (
     <div className="login-container">
@@ -49,30 +49,37 @@ export default function Login() {
               });
             }}
             type="email"
-            id="email"
             name="email"
           />
         </div>
         <div className="field">
-          <label htmlFor="password">Contrasena</label>
+          <label htmlFor="password">Contraseña</label>
           <input
             required
-            type="password"
-            id="password"
-            name="password"
             onChange={(e) => {
               setUser({
                 ...user,
                 password: e.target.value,
               });
             }}
+            type="password"
+            name="password"
           />
         </div>
         <div className="submit">
-          <input type="submit" value={cargando ? 'cargando...' : 'Ingresar'} />
+          <input
+            type="submit"
+            value={cargando ? 'cargando...' : 'Ingresar'}
+            className="link"
+          />
         </div>
       </form>
-      <span>{error && JSON.stringify(error)}</span>
+      {error && <span className="error">Error: {error}</span>}
+      <p className="verdadero">Verdaderos:</p>
+      <p className="verdadero">Email:eve.holt@reqres.in</p>
+      <p className="verdadero">Password:cityslicka</p>
     </div>
   );
-}
+};
+
+export default Login;

@@ -1,16 +1,16 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import Menu from './menu/Menu';
+import './App.css';
 
-import { Navigate } from 'react-router-dom';
+const App = () => {
+  if (!localStorage.getItem('tokenCripto NNJ')) return <Navigate to="/login" />;
 
-export default function App() {
-  if (!localStorage.getItem('tokenEDmarket')) {
-    return <Navigate to={'/login'}></Navigate>;
-  }
   return (
-    <>
-      <Menu></Menu>
-      <Outlet></Outlet>
-    </>
+    <div className="app-container">
+      <Menu />
+      <Outlet />
+    </div>
   );
-}
+};
+
+export default App;

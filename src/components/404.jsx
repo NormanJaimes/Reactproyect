@@ -1,8 +1,8 @@
-export default function Pagina404() {
-  return (
-    <>
-      <h1>404</h1>
-      <span>No encontramos</span>
-    </>
-  );
-}
+const Pagina404 = () => (
+  <>
+    <h1>Página no encontrada</h1>
+    <span>La página solicitada, no existe</span>
+  </>
+)
+
+export default Pagina404
