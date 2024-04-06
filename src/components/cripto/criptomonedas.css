@@ -3,7 +3,6 @@
 }
 
 .list {
- display: flex;
  /* Contenedor */
  display: flex;
  gap: gutter2;
